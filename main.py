@@ -1,15 +1,10 @@
 import asyncio
 import logging
-import aiogram
 from aiogram import Bot, Dispatcher, executor, types
 import os
 from os.path import join, dirname
-from aiogram.types import ReplyKeyboardRemove, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, \
-    InlineKeyboardButton, chat
-from aiogram.utils.json import json
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from dotenv import load_dotenv
-import speech_recognition as sr
-from aiogram.dispatcher.filters import Command
 def get_from_env(key):
     dotenv_path = join(dirname(__file__), 'token.env')
     load_dotenv(dotenv_path)
@@ -17,7 +12,6 @@ def get_from_env(key):
 
 
 API_TOKEN = get_from_env('bot_token')
-r = sr.Recognizer()
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot)
@@ -27,7 +21,7 @@ dp = Dispatcher(bot)
 button_help = KeyboardButton('/help')
 Keyboard = ReplyKeyboardMarkup(resize_keyboard=True).add(button_help)
 inline_btn_1 = InlineKeyboardButton('Вывести небольшой пост о главном увлечении', callback_data='article')
-inline_btn_2 = InlineKeyboardButton('Ссылка на публичный репозиторий с исходниками бота', url="https://github.com/")
+inline_btn_2 = InlineKeyboardButton('Ссылка на публичный репозиторий с исходниками бота', url="https://github.com/dom-din-don/kids-ai-bot")
 
 inline_kb1 = InlineKeyboardMarkup().add(inline_btn_1).add(inline_btn_2)
 @dp.message_handler(commands=['start'])
@@ -72,13 +66,13 @@ async def name(message: types.Message, command):
     if not command.args:
         await message.answer("Введи название истории после команды <b>/tell</b>!")
     elif command.args.lower()=="gpt":
-        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/audio1.ogg')
+        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/voice1.ogg')
     elif command.args.lower()=="sql":
-        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/audio2.ogg')
+        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/voice2.ogg')
     elif command.args.lower()=="love":
-        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/audio3.ogg')
+        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/voice3.ogg')
     elif command.args.lower()=="hello":
-        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/audio4.ogg')
+        await bot.send_audio(message.chat.id, 'https://storage.yandexcloud.net/testtaskkidsaibot/voice4.ogg')
     else:
         await message.answer("Я не понимаю, какую историю ты хочешь попросить, попробуй еще раз😭")
 
